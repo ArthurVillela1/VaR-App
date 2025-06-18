@@ -3,20 +3,11 @@ import pandas as pd
 import yfinance as yf
 import streamlit as st
 import matplotlib.pyplot as plt
-import requests
 from scipy.stats import norm
 
 # Set page layout
 st.set_page_config(layout="wide")
 st.title("Value at Risk (VaR) Calculator")
-
-# Define a session with a custom User-Agent to bypass Yahoo Finance blocking
-session = requests.Session()
-session.headers.update(
-    {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-    }
-)
 
 # Sidebar Inputs
 with st.sidebar:
@@ -42,7 +33,6 @@ with st.sidebar:
 
 # Normalize and prepare input data
 tickers_list = [ticker.upper() for ticker in tickers.split()]
-print(tickers_list)
 weights_list = list(map(float, weights.split()))
 weights_list = [w / 100 for w in weights_list]
 weights_array = np.array(weights_list)
@@ -54,12 +44,11 @@ if len(weights_list) != len(tickers_list):
 
 var_method = st.selectbox("Select VaR Method", ["Historical", "Parametric", "Monte Carlo Simulations"])
 
-# Fetch adjusted close data
+# Fetch adjusted close data using yfinance (no custom session)
 adj_close_df = pd.DataFrame()
 for ticker in tickers_list:
     try:
-        data = yf.download(ticker, start=start_date, end=end_date, session=session, progress=False, threads=False, auto_adjust=False)
-        
+        data = yf.download(ticker, start=start_date, end=end_date, progress=False, threads=False, auto_adjust=False)
         if 'Adj Close' in data.columns and not data['Adj Close'].empty:
             adj_close_df[ticker] = data['Adj Close']
         else:
