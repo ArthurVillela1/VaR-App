@@ -12,7 +12,7 @@ st.title("Value at Risk (VaR) Calculator")
 # Sidebar Inputs
 with st.sidebar:
     st.title("📊 VaR Calculator")
-    st.write("Created by: Arthur Villela")
+    st.write("`Created by: Arthur Villela`")
     linkedin_url = "https://www.linkedin.com/in/arthur-villela"
     github_url = "https://github.com/ArthurVillela1"
     st.markdown(
