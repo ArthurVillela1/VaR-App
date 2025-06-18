@@ -6,11 +6,12 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm
 
 # Set page layout
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 st.title("Value at Risk (VaR) Calculator")
 
 # Sidebar Inputs
 with st.sidebar:
+    st.title("📊 VaR Calculator")
     st.write("Created by: Arthur Villela")
     linkedin_url = "https://www.linkedin.com/in/arthur-villela"
     github_url = "https://github.com/ArthurVillela1"
